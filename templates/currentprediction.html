@@ -1,0 +1,213 @@
+<html>
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+HK&display=swap" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+body {
+   
+   font-family: 'Lato';
+   background:#666;
+   color:#fff;
+ }
+  
+ *{
+   margin:0;
+   padding:0;
+ }
+  
+
+  
+ p {
+   font-size: 1rem;
+   font-weight: normal;
+ }
+  
+ ul,li{
+   list-style:none;
+ }
+ ul{
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: center;
+ }
+ 
+ ul li{
+   margin:1em;
+   text-decoration:none;
+   color:#000;
+   background:#ffc;
+   display:block;
+   height:10em;
+   width:15em;
+   padding:1em;
+   box-shadow: 5px 5px 7px rgba(33,33,33,.7);
+ }
+
+ h1 {
+   font-weight: bold;
+   text-align: center;
+   color: #000;
+ }
+ h2 {
+   font-weight: bold;
+   font-size: 2rem;
+   text-align: center;
+ }
+ p {
+   font-family: 'Lato';
+   font-size: 2rem;
+   text-align: center;
+   color: #000;
+ }
+
+ ul li {
+ text-decoration:none;
+ color:#000;
+ background:#ffc;
+ display:block;
+ height:10em;
+ width:15em;
+ padding:1em;
+ box-shadow: 5px 5px 7px rgba(33,33,33,.7);
+ transition: transform .15s linear;
+}
+
+ul li:nth-child(even) {
+ position:relative;
+ top:5px;
+ background:#cfc;
+}
+ul li:nth-child(odd) {
+ position:relative;
+ top:5px;
+ background:#ccf;
+}
+a{
+   color: blue;
+   font-family: 'Lato';
+   text-align: center;
+
+ }
+ .blink_me {
+      animation: blinker 1s linear infinite;
+    }
+    
+    @keyframes blinker {
+      50% {
+        opacity: 0;
+      }
+    }
+
+
+    .navbar-brand{
+
+font-size: 28px;
+}
+.navbar-nav{
+
+
+font-size: 20px;
+}
+
+img{
+      height: 300px;
+      width: 300px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      width: 50%; 
+    }
+</style>
+
+<body>
+  <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">Crop Recommendation System</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-link" aria-current="page" href="/">Home</a>
+          <a class="nav-link" href="/record">Previous records</a>
+          <a class="nav-link active" href="/currentprediction">Prediction based on current data</a>
+         
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+    </symbol>
+    <symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
+      <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+    </symbol>
+    <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+      <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+    </symbol>
+  </svg>
+  
+ 
+  {% if alert %}
+  <div class="alert alert-danger d-flex align-items-center" role="alert">
+    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+      
+    <div class="blink_me"><h1 style="color: red;">Alert! Soil Moisture is below 50%</h1></div>
+    
+
+  </div>
+ 
+  {% endif %}
+ 
+<br>
+    <h1>Current Data</h1>
+    <ul>
+        <li>
+          
+            <h2>Date & Time</h2>
+            <p>{{date[0]}}</p>
+          
+        </li>
+        <li>
+            <h2>Temperature</h2>
+            <p>{{temperature[0]}} °C</p>
+        </li>
+
+        <li>
+            <h2>Humidity</h2>
+            <p>{{humidity[0]}} %</p>
+        </li>
+
+        <li>
+            <h2>Moisture</h2>
+            <p>{{cmip}} %</p>
+        </li>
+      </ul>
+<br>
+    
+
+   
+    <h1>Crop Recommendation based on Temperature and Humidity is:</h1>
+    {% if rice %}
+<img src="static/rice.jpg">
+    {% endif %}
+    {% if soyabean %}
+<img src="static/soyabean.jpg">
+    {% endif %}
+    {% if wheat %}
+<img src="static/wheat.jpg">
+    {% endif %}
+    {% if corn %}
+<img src="static/corn.jpg">
+    {% endif %}
+    {% if potato %}
+<img src="static/potato.jpg">
+    {% endif %}
+    <p><u>{{Maincrop}}</u></p>
+<br>
+</body>
+
+</html>
